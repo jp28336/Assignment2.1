@@ -1,0 +1,667 @@
+<!doctype html>
+<html>
+<head>
+<title>calc2</title>
+</head>
+	
+
+
+<body>
+<div id="calculator">
+			<form>
+				<input type="text" id="display">
+				<br>
+				<input type="button" value="C" id="keys" onclick="addtoscreen('c')">
+				
+				<input type="button" value="S" id="keys" onclick="power1()">
+				<input type="button" value="D" id="keys" onclick="power2()">
+				<input type="button" value="-" id="keys" onclick="addtoscreen('-')">
+				<br>
+				<input type="button" value="9" id="keys" onclick="addtoscreen('9')">
+				<input type="button" value="8" id="keys" onclick="addtoscreen('8')">
+				<input type="button" value="7" id="keys" onclick="addtoscreen('7')">
+				<input type="button" value="6" id="keys" onclick="addtoscreen('6')">
+				<br>
+				<input type="button" value="5" id="keys" onclick="addtoscreen('5')">
+				<input type="button" value="4" id="keys" onclick="addtoscreen('4')">
+				<input type="button" value="3" id="keys" onclick="addtoscreen('3')">
+				<input type="button" value="2" id="keys" onclick="addtoscreen('2')">	
+				<br>	
+				<input type="button" value="1" id="keys" onclick="addtoscreen('1')">
+				<input type="button" value="0" id="keys" onclick="addtoscreen('0')">
+				<input type="button" value="." id="keys" onclick="addtoscreen('.')">	
+				<br>
+				<br>
+				<input type="text" id="display2">
+				<br><br>
+				<input type="text" id="display3">
+				<br><br>
+				<input type="text" id="display4">
+				<br><br>
+				<input type="text" id="display5">
+			</form>
+		</div>
+	
+		<script>
+var box=document.getElementById('display');
+var box2=document.getElementById('display2');
+var box3=document.getElementById('display3');
+var box4=document.getElementById('display4');
+var box5=document.getElementById('display5');			
+function addtoscreen(x)
+{
+	box.value+=x;
+	if(x=='c')
+	{
+		box.value='';
+	}
+}
+function answer()
+{
+	x=box.value;
+	x=eval(x);
+	box.value=x;
+}
+function backspace()
+{
+	var number=box.value;
+	var len=number.length-1;
+	var newnumber=number.substring(0,len);
+	box.value=newnumber;
+	//alert(len);
+}
+function power(y)
+{
+	x=box.value;
+	x=Math.pow(x,y);
+	box.value=x;
+}
+function power1()
+{
+	x=box.value;
+	if(x==0)
+	{
+		var IEEE754SinglePrecision32bit="00000000000000000000000000000000";
+		box2.value=IEEE754SinglePrecision32bit;
+		box3.value=0.0;
+	}
+	else
+	{
+		Binary="";
+		if(x>=0)
+		{
+			Binary+=0;
+		}
+		else
+		{
+			Binary+=1;
+			x=x*-1;
+		}
+		wholenumbers=x;
+		decimalnumbers=x;
+		while(decimalnumbers>=1)
+		{
+			decimalnumbers=decimalnumbers-1;
+		}
+		while(wholenumbers>=1)
+		{
+			wholenumbers=wholenumbers-1;
+		}
+		wholenumbers=x-wholenumbers;
+
+		var j="";
+
+		while(wholenumbers>=1)
+		{
+			if(wholenumbers==1)
+			{
+				j=j+"1";
+				wholenumbers=wholenumbers-1;
+			}
+			else if(wholenumbers%2==0)
+			{
+				j=j+"0";
+				wholenumbers=wholenumbers/2;
+			}
+			else 
+			{
+				j=j+"1";
+				wholenumbers=wholenumbers-1;
+				wholenumbers=wholenumbers/2;
+			}
+
+		}
+		//box2.value=j;
+
+		var k="";
+		for(i=0;i<j.length;i++)
+		{
+			k=k+j.charAt(j.length-1-i)
+		}
+
+		//box2.value=k;
+
+
+		var twenty3="";
+		for(i=0;i<100;i++)
+		{
+			decimalnumbers=decimalnumbers*2;
+			if(decimalnumbers>=1)
+			{
+				twenty3=twenty3+"1";
+				decimalnumbers=decimalnumbers-1;
+			}
+			else
+			{
+				twenty3=twenty3+"0";
+			}
+		}
+
+		var numbers3=k+"."+twenty3;
+		var numbers4=k+twenty3;
+
+		var numbers5=0;
+		while(numbers3.charAt(numbers5)!='.')
+		{
+			numbers5=numbers5+1;
+		}
+		numbers5=numbers5+1;
+		//box2.value=numbers5;
+
+
+		var Mantissawith1="";
+		for(i=0;i<numbers4.length;i++)
+		{
+			if(numbers4.charAt(i)=='1')
+			{
+				Mantissawith1=numbers4.substring(0, i+1)+"."+numbers4.substring(i+1);
+
+			}
+			if(numbers4.charAt(i)=='1')
+			{
+				break;
+			}
+		}
+		//box2.value=Mantissawith1;
+
+		var numbers6=0;
+		while(Mantissawith1.charAt(numbers6)!='.')
+		{
+			numbers6=numbers6+1;
+		}
+		numbers6=numbers6+1;
+		//box2.value=numbers6;
+		//box2.value=Mantissawith1;
+		var bias127=127-numbers6+numbers5;
+		//box2.value=bias127;
+
+		var binary127="";
+		if (bias127>=128)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-128;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}	 
+		if (bias127>=64)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-64;
+		}
+		else 
+		{
+			binary127=binary127+"0";			 
+		}	 	 
+		if (bias127>=32)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-32;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}			 
+		if (bias127>=16)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-16;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}	 		 
+		if (bias127>=8)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-8;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}		 
+		if (bias127>=4)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-4;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}		 
+		if (bias127>=2)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-2;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}		 
+		if (bias127>=1)
+		{
+			binary127=binary127+"1";
+			bias127=bias127-2;
+		}
+		else 
+		{
+			binary127=binary127+"0";
+		}
+
+		var Mantissa=k+twenty3;
+		var IEEE754SinglePrecision32bit=Binary+binary127+Mantissa.substring(numbers6-1,numbers6+22);
+
+		box2.value=IEEE754SinglePrecision32bit;
+
+		var unsignedbit=IEEE754SinglePrecision32bit.substring(0,1);
+		var exponent32=IEEE754SinglePrecision32bit.substring(1,9);
+		var Mantissa32=IEEE754SinglePrecision32bit.substring(9);
+
+		exponent33=0;
+		for(i=0;i<exponent32.length;i++)
+		{
+			if (exponent32.charAt(i)=='1')
+			{
+				number=7-i;
+				exponent33=exponent33+Math.pow(2,7-i);
+			}
+		}
+		exponent33=exponent33-127;
+
+		decimal=0;
+		for(i=0;i<Mantissa32.length;i++)
+		{
+			if(Mantissa32.charAt(i)=='1')
+			{
+				decimal=decimal+Math.pow(2, -i-1);
+			}
+		}
+		singledecimalnumber=Math.pow(-1, unsignedbit)*(1+decimal)*Math.pow(2, exponent33);
+
+		box3.value=singledecimalnumber;
+	}
+}
+function power2()
+{
+	x=box.value;
+	if(x==0)
+	{
+		var IEEE754DoublePrecision64bit="0000000000000000000000000000000000000000000000000000000000000000";
+		box4.value=IEEE754DoublePrecision64bit;
+		box5.value=0.0;
+	}
+	else
+	{
+			Binary="";
+		if(x>=0)
+		{
+			Binary+=0;
+		}
+		else
+		{
+			Binary+=1;
+			x=x*-1;
+		}
+		wholenumbers=x;
+		decimalnumbers=x;
+		while(decimalnumbers>=1)
+		{
+			decimalnumbers=decimalnumbers-1;
+		}
+		while(wholenumbers>=1)
+		{
+			wholenumbers=wholenumbers-1;
+		}
+		wholenumbers=x-wholenumbers;
+
+		var j="";
+
+		while(wholenumbers>=1)
+		{
+			if(wholenumbers==1)
+			{
+				j=j+"1";
+				wholenumbers=wholenumbers-1;
+			}
+			else if(wholenumbers%2==0)
+			{
+				j=j+"0";
+				wholenumbers=wholenumbers/2;
+			}
+			else 
+			{
+				j=j+"1";
+				wholenumbers=wholenumbers-1;
+				wholenumbers=wholenumbers/2;
+			}
+
+		}
+		//box2.value=j;
+
+		var k="";
+		for(i=0;i<j.length;i++)
+		{
+			k=k+j.charAt(j.length-1-i)
+		}
+
+		//box2.value=k;
+
+
+		var twenty3="";
+		for(i=0;i<100;i++)
+		{
+			decimalnumbers=decimalnumbers*2;
+			if(decimalnumbers>=1)
+			{
+				twenty3=twenty3+"1";
+				decimalnumbers=decimalnumbers-1;
+			}
+			else
+			{
+				twenty3=twenty3+"0";
+			}
+		}
+
+		var numbers3=k+"."+twenty3;
+		var numbers4=k+twenty3;
+
+		var numbers5=0;
+		while(numbers3.charAt(numbers5)!='.')
+		{
+			numbers5=numbers5+1;
+		}
+		numbers5=numbers5+1;
+		//box2.value=numbers5;
+
+
+		var Mantissawith1="";
+		for(i=0;i<numbers4.length;i++)
+		{
+			if(numbers4.charAt(i)=='1')
+			{
+				Mantissawith1=numbers4.substring(0, i+1)+"."+numbers4.substring(i+1);
+
+			}
+			if(numbers4.charAt(i)=='1')
+			{
+				break;
+			}
+		}
+		//box2.value=Mantissawith1;
+
+		var numbers6=0;
+		while(Mantissawith1.charAt(numbers6)!='.')
+		{
+			numbers6=numbers6+1;
+		}
+		numbers6=numbers6+1;
+		//box2.value=numbers6;
+		//box2.value=Mantissawith1;
+		var bias1023=1023-numbers6+numbers5;
+		//box2.value=bias127;
+
+		var binary1023="";
+		if (bias1023>=1024)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-1024;
+		}
+		else
+		{			 
+			binary1023=binary1023+"0";
+		}
+		if (bias1023>=512)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-512;
+		}
+		else
+		{
+			binary1023=binary1023+"0";
+		}
+		if (bias1023>=256)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-256;
+		}
+		else
+		{
+			binary1023=binary1023+"0";
+		}
+		if (bias1023>=128)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-128;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}
+		if (bias1023>=64)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-64;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";		 
+		}	 	 
+			 if (bias1023>=32)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-32;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}		 
+		if (bias1023>=16)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-16;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}	  
+		if (bias1023>=8)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-8;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}		 
+		if (bias1023>=4)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-4;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}		 
+		if (bias1023>=2)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-2;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}		 
+		if (bias1023>=1)
+		{
+			binary1023=binary1023+"1";
+			bias1023=bias1023-1;
+		}
+		else 
+		{
+			binary1023=binary1023+"0";
+		}
+
+		var Mantissa=k+twenty3;
+		var IEEE754DoublePrecision64bit=Binary+binary1023+Mantissa.substring(numbers6-1,numbers6+51);
+
+		box4.value=IEEE754DoublePrecision64bit;
+		
+		var unsignedbit64=IEEE754DoublePrecision64bit.substring(0,1);
+		var exponent64=IEEE754DoublePrecision64bit.substring(1,12);
+		var Mantissa64=IEEE754DoublePrecision64bit.substring(12);
+
+		exponent64v2=0;
+		for(i=0;i<exponent64.length;i++)
+		{
+			if (exponent64.charAt(i)=='1')
+			{
+				number=7-i;
+				exponent64v2=exponent64v2+Math.pow(2,10-i);
+			}
+		}
+		exponent64v2=exponent64v2-1023;
+
+		decimal2=0;
+		for(i=0;i<Mantissa64.length;i++)
+		{
+			if(Mantissa64.charAt(i)=='1')
+			{
+				decimal2=decimal2+Math.pow(2, -i-1);
+			}
+		}
+		doubledecimalnumber=Math.pow(-1, unsignedbit64)*(1+decimal2)*Math.pow(2, exponent64v2);
+
+		box5.value=doubledecimalnumber;
+	}
+	
+}			
+	
+
+</script>
+	
+</body>
+
+
+<style>
+@charset "utf-8";
+/* CSS Document */
+#calculator
+{
+	width: 550px;
+	height: 640px;
+	border: 1px solid black;
+	text-align: center;
+	background: black;
+	margin: 150px auto;
+	box-shadow: 0px 0px 100px gray;
+}
+
+#display
+{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	width: 220px;
+	height: 30px;
+	border: 1px solid grey;
+	box-shadow: 0px 0px 30px red;
+	text-align: right;
+}
+#display2
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	width: 440px;
+	height: 30px;
+	border: 1px solid grey;
+	box-shadow: 0px 0px 30px red;
+	text-align: right;
+}
+#display3
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	width: 440px;
+	height: 30px;
+	border: 1px solid grey;
+	box-shadow: 0px 0px 30px red;
+	text-align: right;
+}
+#display4
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	width: 440px;
+	height: 30px;
+	border: 1px solid grey;
+	box-shadow: 0px 0px 30px red;
+	text-align: right;
+}
+#display5
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	width: 440px;
+	height: 30px;
+	border: 1px solid grey;
+	box-shadow: 0px 0px 30px red;
+	text-align: right;
+}
+
+#keys
+{
+	width: 41px;
+	height: 35px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	background: black;
+	color: white;
+	box-shadow: 0px 0px 20px skyblue;
+	cursor: pointer;
+}
+
+#equal
+{
+	width: 41px;
+	height: 35px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	background: red;
+	box-shadow: 0px 0px 20px skyblue;
+	cursor: pointer;
+}
+
+#keys:hover
+{
+	color: red;
+	font-weight: bold;
+}
+#equal:hover
+{
+	color: red;
+	font-weight: bold;
+}
+</style>
+
+
+</html>
